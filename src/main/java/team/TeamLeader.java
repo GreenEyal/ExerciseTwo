@@ -31,4 +31,11 @@ public class TeamLeader extends TeamMember {
         }
         return teamInventory;
     }
+
+    /**
+     * Method to trade a piece of equipment between 2 team members
+     */
+    public void tradeItems(String giverPersonalNumber, String takerPersonalNumber, String itemID) {
+        team.get(takerPersonalNumber).addItem(team.get(giverPersonalNumber).removeItem(itemID));
+    }
 }
