@@ -3,7 +3,6 @@ package team;
 import equipment.Equipment;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class TeamMember {
     private String personalNumber;
