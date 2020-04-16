@@ -14,6 +14,11 @@ public class TeamLeader extends TeamMember {
         this.team = new HashMap<String, TeamMember>();
     }
 
+    public TeamLeader(String personalNumber, HashMap<String, TeamMember> team) {
+        super(personalNumber);
+        this.team = team;
+    }
+
     public void addTeamMember(TeamMember teamMember) {
         team.put(teamMember.getPersonalNumber(), teamMember);
     }
