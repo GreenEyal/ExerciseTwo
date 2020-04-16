@@ -1,6 +1,8 @@
 package team;
 
 import equipment.Equipment;
+import exceptions.ItemNotFoundException;
+import exceptions.MemberNotFoundException;
 
 import java.util.HashMap;
 
@@ -21,8 +23,9 @@ public class TeamLeader extends TeamMember {
     }
 
     /**
-     * Method to return a hashmap of equipmentId-->equipment of the equipment of all team
-     * members in team leader's team.
+     * Method to return inventory of all team members together
+     *
+     * @return HashMap of equipment ID keys pointing to matching equipment objects
      */
     public HashMap<String, Equipment> getTeamInventory() {
         HashMap<String, Equipment> teamInventory = new HashMap<String, Equipment>();
@@ -33,9 +36,23 @@ public class TeamLeader extends TeamMember {
     }
 
     /**
-     * Method to trade a piece of equipment between 2 team members
+     * Method to trade a piece of equipment between 2 team members.
+     *
+     * @param giverPersonalNumber personal number of the item giver
+     * @param takerPersonalNumber personal number of the item receiver
+     * @param itemID              id of the item to be given
+     * @throws MemberNotFoundException if either giver or taker ID not found in team's members
+     * @throws ItemNotFoundException   if given item ID not found in giver's inventory
      */
-    public void tradeItems(String giverPersonalNumber, String takerPersonalNumber, String itemID) {
-        team.get(takerPersonalNumber).addItem(team.get(giverPersonalNumber).removeItem(itemID));
+    public void tradeItems(String giverPersonalNumber, String takerPersonalNumber, String itemID) throws ItemNotFoundException, MemberNotFoundException {
+        if (!team.containsKey(giverPersonalNumber)) {
+            throw new MemberNotFoundException(giverPersonalNumber + " - Not found in team");
+        } else if (!team.containsKey(takerPersonalNumber)) {
+            throw new MemberNotFoundException(takerPersonalNumber + " - Not found in team");
+        } else if (!team.get(giverPersonalNumber).getInventory().containsKey(itemID)) {
+            throw new ItemNotFoundException("Item " + itemID + " not found in inventory of " + giverPersonalNumber);
+        } else {
+            team.get(takerPersonalNumber).addItem(team.get(giverPersonalNumber).removeItem(itemID));
+        }
     }
 }
