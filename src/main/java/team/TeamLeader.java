@@ -28,7 +28,7 @@ public class TeamLeader extends TeamMember {
     }
 
     /**
-     * Method to return inventory of all team members together
+     * Method to return combined inventory of all team members
      *
      * @return HashMap of equipment ID keys pointing to matching equipment objects
      */
@@ -38,6 +38,19 @@ public class TeamLeader extends TeamMember {
             teamInventory.putAll(team.get(personalNumber).getInventory());
         }
         return teamInventory;
+    }
+
+    /**
+     * Method to return inventory of all team members with distinction by team member
+     *
+     * @return HashMap of personal number keys pointing to matching team member's inventory
+     */
+    public HashMap<String, HashMap<String, Equipment>> getTeamInventoryByMember() {
+        HashMap<String, HashMap<String, Equipment>> teamInventoryByMember = new HashMap<String, HashMap<String, Equipment>>();
+        for (String personalNumber : team.keySet()) {
+            teamInventoryByMember.put(personalNumber, team.get(personalNumber).getInventory());
+        }
+        return teamInventoryByMember;
     }
 
     /**
